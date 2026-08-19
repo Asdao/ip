@@ -25,6 +25,54 @@ ____________________________________________________________
 ____________________________________________________________
 ```
 
+## Test case 5: Invalid commands and empty descriptions
+
+Aim: Verify that malformed task commands and unknown commands produce specific errors without crashing or adding invalid tasks.
+
+Input:
+
+```text
+todo
+
+blah
+deadline return book
+event project meeting /from Monday
+mark nope
+unmark 9
+bye
+```
+
+Expected output:
+
+```text
+____________________________________________________________
+    F U R I N A
+Hello! I'm Furina.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+    OOPS!!! A todo task needs a description.
+____________________________________________________________
+____________________________________________________________
+    OOPS!!! I don't recognize that command.
+____________________________________________________________
+____________________________________________________________
+    OOPS!!! A deadline needs a description and a date after /by.
+____________________________________________________________
+____________________________________________________________
+    OOPS!!! An event needs a description, a start time after /from, and an end time after /to.
+____________________________________________________________
+____________________________________________________________
+    OOPS!!! Task numbers must be positive whole numbers.
+____________________________________________________________
+____________________________________________________________
+    OOPS!!! There is no task with that number.
+____________________________________________________________
+____________________________________________________________
+    Bye. Hope to see you again soon!
+____________________________________________________________
+```
+
 ## Test case 2: Task types and listing
 
 Aim: Verify todo, deadline, and event tasks retain their details and display correctly in a list.
@@ -154,10 +202,10 @@ ____________________________________________________________
     Now you have 1 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
-    Please provide a valid task number.
+    OOPS!!! Task numbers must be positive whole numbers.
 ____________________________________________________________
 ____________________________________________________________
-    That task does not exist.
+    OOPS!!! There is no task with that number.
 ____________________________________________________________
 ____________________________________________________________
     Here are the tasks in your list:

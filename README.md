@@ -20,31 +20,30 @@ Prerequisites: JDK 25, update Intellij to the most recent version.
    Hello! I'm Furina.
    What can I do for you?
    ____________________________________________________________
-   read book
+   todo read book
    ____________________________________________________________
-       added: read book
+       Got it. I've added this task:
+         [T][ ] read book
+       Now you have 1 tasks in the list.
    ____________________________________________________________
-   return book
+   deadline return book /by Sunday
    ____________________________________________________________
-       added: return book
+       Got it. I've added this task:
+         [D][ ] return book (by: Sunday)
+       Now you have 2 tasks in the list.
    ____________________________________________________________
    list
        Here are the tasks in your list:
-       1.[ ] read book
-       2.[ ] return book
+       1.[T][ ] read book
+       2.[D][ ] return book (by: Sunday)
    ____________________________________________________________
    mark 2
        Nice! I've marked this task as done:
-         [X] return book
+         [D][X] return book (by: Sunday)
    ____________________________________________________________
    unmark 2
        OK, I've marked this task as not done yet:
-         [ ] return book
-   ____________________________________________________________
-   list
-       Here are the tasks in your list:
-       1.[ ] read book
-       2.[ ] return book
+         [D][ ] return book (by: Sunday)
    ____________________________________________________________
    bye
    ____________________________________________________________
