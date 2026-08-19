@@ -4,9 +4,13 @@ import java.util.Scanner;
  * Entry point for the Furina chatbot.
  */
 class Furina {
+    private static final int MAX_TASKS = 100;
+
     static void main(String[] args) {
         String separator = "____________________________________________________________";
         String banner = "    F U R I N A";
+        String[] tasks = new String[MAX_TASKS];
+        int taskCount = 0;
 
         System.out.println(separator);
         System.out.println(banner);
@@ -23,7 +27,19 @@ class Furina {
             }
 
             System.out.println(separator);
-            System.out.println("    " + command);
+
+            if (command.equals("list")) {
+                for (int i = 0; i < taskCount; i++) {
+                    System.out.println("    " + (i + 1) + ". " + tasks[i]);
+                }
+            } else if (taskCount < MAX_TASKS) {
+                tasks[taskCount] = command;
+                taskCount++;
+                System.out.println("    added: " + command);
+            } else {
+                System.out.println("    The task list is full.");
+            }
+
             System.out.println(separator);
         }
 
