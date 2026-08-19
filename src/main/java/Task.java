@@ -2,7 +2,7 @@
  * Represents one task in Furina's in-memory task list.
  */
 public class Task {
-    protected String type;
+    protected TaskType type;
     protected String description;
     protected boolean isDone;
     protected String by;
@@ -15,19 +15,19 @@ public class Task {
      * @param description the text describing the task
      */
     public Task(String description) {
-        this("T", description, null, null, null);
+        this(TaskType.TODO, description, null, null, null);
     }
 
     /**
      * Creates a task with a type and optional deadline or event details.
      *
-     * @param type the task type marker, such as T, D, or E
+     * @param type the task type
      * @param description the text describing the task
      * @param by the deadline text, if this is a deadline task
      * @param from the event start text, if this is an event task
      * @param to the event end text, if this is an event task
      */
-    public Task(String type, String description, String by, String from, String to) {
+    public Task(TaskType type, String description, String by, String from, String to) {
         this.type = type;
         this.description = description;
         this.isDone = false;
@@ -63,11 +63,12 @@ public class Task {
     @Override
     public String toString() {
         String details = "";
-        if (type.equals("D")) {
+        if (type == TaskType.DEADLINE) {
             details = " (by: " + by + ")";
-        } else if (type.equals("E")) {
+        } else if (type == TaskType.EVENT) {
             details = " (from: " + from + " to: " + to + ")";
         }
-        return "[" + type + "][" + getStatusIcon() + "] " + description + details;
+        return "[" + type.getSymbol() + "][" + getStatusIcon() + "] "
+                + description + details;
     }
 }

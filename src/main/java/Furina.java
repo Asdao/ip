@@ -141,13 +141,13 @@ class Furina {
             if (description.isBlank()) {
                 throw new IllegalArgumentException("A todo task needs a description.");
             }
-            return new Task("T", description, null, null, null);
+            return new Task(TaskType.TODO, description, null, null, null);
         }
 
         if (isCommand(command, "deadline")) {
             String[] parts = command.substring(8).trim().split("\\s+/by\\s+", 2);
             if (parts.length == 2 && !parts[0].isBlank() && !parts[1].isBlank()) {
-                return new Task("D", parts[0].trim(), parts[1].trim(), null, null);
+                return new Task(TaskType.DEADLINE, parts[0].trim(), parts[1].trim(), null, null);
             }
             throw new IllegalArgumentException(
                     "A deadline needs a description and a date after /by.");
@@ -161,7 +161,7 @@ class Furina {
                 String description = parts[0].trim();
                 String from = parts[1].trim();
                 String to = parts[2].trim();
-                return new Task("E", description, null, from, to);
+                return new Task(TaskType.EVENT, description, null, from, to);
             }
             throw new IllegalArgumentException(
                     "An event needs a description, a start time after /from, and an end time after /to.");
