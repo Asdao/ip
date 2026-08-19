@@ -24,6 +24,14 @@ Unless the user says otherwise, assume that you are assisting a student working 
 
 # Project-specific requirements
 
+## UI testing
+
+After each code update:
+
+1. Update `test/ui-test-plan.md` when the observable console behavior or requirements change.
+2. Invoke the project-specific `.agents/skills/test-ui` skill and review its console input/output record.
+3. Stop at the first failed case and report the actual and expected output before making further changes.
+
 ## Java version:
 
 Ensure that Java 25 is used when running the application or build tasks. On macOS, use `sdk use java 25.0.3.fx-zulu` to switch to Java 25 if needed.
