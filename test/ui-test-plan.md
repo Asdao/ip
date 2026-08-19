@@ -172,6 +172,63 @@ ____________________________________________________________
 ____________________________________________________________
 ```
 
+## Test case 6: Delete and reindex tasks
+
+Aim: Verify that `delete N` removes the requested task, updates the count, and shifts later tasks down.
+
+Input:
+
+```text
+todo read book
+deadline return book /by June 6th
+event project meeting /from Aug 6th 2pm /to 4pm
+delete 2
+list
+delete 9
+bye
+```
+
+Expected output:
+
+```text
+____________________________________________________________
+    F U R I N A
+Hello! I'm Furina.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+    Got it. I've added this task:
+      [T][ ] read book
+    Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+    Got it. I've added this task:
+      [D][ ] return book (by: June 6th)
+    Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+    Got it. I've added this task:
+      [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+    Now you have 3 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+    Noted. I've removed this task:
+      [D][ ] return book (by: June 6th)
+    Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+    Here are the tasks in your list:
+    1.[T][ ] read book
+    2.[E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+____________________________________________________________
+____________________________________________________________
+    OOPS!!! There is no task with that number.
+____________________________________________________________
+____________________________________________________________
+    Bye. Hope to see you again soon!
+____________________________________________________________
+```
+
 ## Test case 4: Blank input and invalid task number
 
 Aim: Verify blank lines are ignored and invalid status commands do not crash the program.

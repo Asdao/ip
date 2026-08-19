@@ -45,6 +45,12 @@ Prerequisites: JDK 25, update Intellij to the most recent version.
        OK, I've marked this task as not done yet:
          [D][ ] return book (by: Sunday)
    ____________________________________________________________
+   delete 2
+   ____________________________________________________________
+       Noted. I've removed this task:
+         [D][ ] return book (by: Sunday)
+       Now you have 1 tasks in the list.
+   ____________________________________________________________
    bye
    ____________________________________________________________
        Bye. Hope to see you again soon!

@@ -1,16 +1,14 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
  * Entry point for the Furina chatbot.
  */
 class Furina {
-    private static final int MAX_TASKS = 100;
-
     static void main(String[] args) {
         String separator = "____________________________________________________________";
         String banner = "    F U R I N A";
-        Task[] tasks = new Task[MAX_TASKS];
-        int taskCount = 0;
+        ArrayList<Task> tasks = new ArrayList<>();
 
         System.out.println(separator);
         System.out.println(banner);
@@ -34,25 +32,22 @@ class Furina {
 
             if (command.equals("list")) {
                 System.out.println("    Here are the tasks in your list:");
-                for (int i = 0; i < taskCount; i++) {
-                    System.out.println("    " + (i + 1) + "." + tasks[i]);
+                for (int i = 0; i < tasks.size(); i++) {
+                    System.out.println("    " + (i + 1) + "." + tasks.get(i));
                 }
+            } else if (isCommand(command, "delete")) {
+                deleteTask(command, tasks);
             } else if (isCommand(command, "mark")) {
-                updateTaskStatus(command, tasks, taskCount, true);
+                updateTaskStatus(command, tasks, true);
             } else if (isCommand(command, "unmark")) {
-                updateTaskStatus(command, tasks, taskCount, false);
+                updateTaskStatus(command, tasks, false);
             } else {
                 try {
                     Task newTask = createTask(command);
-                    if (taskCount >= MAX_TASKS) {
-                        throw new IllegalArgumentException("The task list is full.");
-                    }
-
-                    tasks[taskCount] = newTask;
-                    taskCount++;
+                    tasks.add(newTask);
                     System.out.println("    Got it. I've added this task:");
                     System.out.println("      " + newTask);
-                    System.out.println("    Now you have " + taskCount + " tasks in the list.");
+                    System.out.println("    Now you have " + tasks.size() + " tasks in the list.");
                 } catch (IllegalArgumentException exception) {
                     System.out.println("    OOPS!!! " + exception.getMessage());
                 }
@@ -70,8 +65,8 @@ class Furina {
      * Updates the completion status of a task from a command such as
      * "mark 2" or "unmark 2".
      */
-    private static void updateTaskStatus(String command, Task[] tasks,
-                                         int taskCount, boolean isDone) {
+    private static void updateTaskStatus(String command, ArrayList<Task> tasks,
+                                         boolean isDone) {
         String[] commandParts = command.trim().split("\\s+");
         if (commandParts.length != 2) {
             System.out.println("    OOPS!!! Please provide a task number, for example: mark 2.");
@@ -82,20 +77,48 @@ class Furina {
             int taskNumber = Integer.parseInt(commandParts[1]);
             int taskIndex = taskNumber - 1;
 
-            if (taskIndex < 0 || taskIndex >= taskCount) {
+            if (taskIndex < 0 || taskIndex >= tasks.size()) {
                 System.out.println("    OOPS!!! There is no task with that number.");
                 return;
             }
 
             if (isDone) {
-                tasks[taskIndex].markAsDone();
+                tasks.get(taskIndex).markAsDone();
                 System.out.println("    Nice! I've marked this task as done:");
-                System.out.println("      " + tasks[taskIndex]);
+                System.out.println("      " + tasks.get(taskIndex));
             } else {
-                tasks[taskIndex].markAsNotDone();
+                tasks.get(taskIndex).markAsNotDone();
                 System.out.println("    OK, I've marked this task as not done yet:");
-                System.out.println("      " + tasks[taskIndex]);
+                System.out.println("      " + tasks.get(taskIndex));
             }
+        } catch (NumberFormatException exception) {
+            System.out.println("    OOPS!!! Task numbers must be positive whole numbers.");
+        }
+    }
+
+    /**
+     * Removes a task using a command such as "delete 3".
+     */
+    private static void deleteTask(String command, ArrayList<Task> tasks) {
+        String[] commandParts = command.trim().split("\\s+");
+        if (commandParts.length != 2) {
+            System.out.println("    OOPS!!! Please provide a task number, for example: delete 2.");
+            return;
+        }
+
+        try {
+            int taskNumber = Integer.parseInt(commandParts[1]);
+            int taskIndex = taskNumber - 1;
+
+            if (taskIndex < 0 || taskIndex >= tasks.size()) {
+                System.out.println("    OOPS!!! There is no task with that number.");
+                return;
+            }
+
+            Task deletedTask = tasks.remove(taskIndex);
+            System.out.println("    Noted. I've removed this task:");
+            System.out.println("      " + deletedTask);
+            System.out.println("    Now you have " + tasks.size() + " tasks in the list.");
         } catch (NumberFormatException exception) {
             System.out.println("    OOPS!!! Task numbers must be positive whole numbers.");
         }
