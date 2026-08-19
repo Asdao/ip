@@ -29,8 +29,22 @@ Prerequisites: JDK 25, update Intellij to the most recent version.
        added: return book
    ____________________________________________________________
    list
-       1. read book
-       2. return book
+       Here are the tasks in your list:
+       1.[ ] read book
+       2.[ ] return book
+   ____________________________________________________________
+   mark 2
+       Nice! I've marked this task as done:
+         [X] return book
+   ____________________________________________________________
+   unmark 2
+       OK, I've marked this task as not done yet:
+         [ ] return book
+   ____________________________________________________________
+   list
+       Here are the tasks in your list:
+       1.[ ] read book
+       2.[ ] return book
    ____________________________________________________________
    bye
    ____________________________________________________________
