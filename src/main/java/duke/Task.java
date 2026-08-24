@@ -7,11 +7,17 @@ import java.time.LocalDateTime;
  */
 public class Task {
     protected TaskType type;
+
     protected String description;
+
     protected boolean isDone;
+
     protected String by;
+
     protected LocalDateTime byDateTime;
+
     protected String from;
+
     protected String to;
 
     /**

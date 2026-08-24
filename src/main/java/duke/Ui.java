@@ -6,6 +6,7 @@ import java.util.Scanner;
 /** Handles all console input and output for Furina. */
 class Ui {
     private static final String SEPARATOR = "____________________________________________________________";
+
     private final Scanner scanner;
 
     /** Creates a UI that reads commands from standard input. */
