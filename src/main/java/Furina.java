@@ -1,3 +1,5 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -147,7 +149,14 @@ class Furina {
         if (isCommand(command, "deadline")) {
             String[] parts = command.substring(8).trim().split("\\s+/by\\s+", 2);
             if (parts.length == 2 && !parts[0].isBlank() && !parts[1].isBlank()) {
-                return new Task(TaskType.DEADLINE, parts[0].trim(), parts[1].trim(), null, null);
+                String deadlineText = parts[1].trim();
+                try {
+                    LocalDateTime deadline = DateTimeParser.parse(deadlineText);
+                    return new Task(parts[0].trim(), deadline);
+                } catch (DateTimeParseException ignored) {
+                    // Keep supporting natural-language text such as "Sunday".
+                    return new Task(TaskType.DEADLINE, parts[0].trim(), deadlineText, null, null);
+                }
             }
             throw new IllegalArgumentException(
                     "A deadline needs a description and a date after /by.");
