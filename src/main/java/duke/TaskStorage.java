@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,7 +87,11 @@ class TaskStorage {
             task = new Task(type, description, null, null, null);
         } else if (type == TaskType.DEADLINE && fields.length == 4
                 && !fields[3].trim().isBlank()) {
-            task = new Task(type, description, fields[3].trim(), null, null);
+            try {
+                task = new Task(description, DateTimeParser.parse(fields[3].trim()));
+            } catch (DateTimeParseException ignored) {
+                task = new Task(type, description, fields[3].trim(), null, null);
+            }
         } else if (type == TaskType.EVENT && fields.length == 5
                 && !fields[3].trim().isBlank() && !fields[4].trim().isBlank()) {
             task = new Task(type, description, null, fields[3].trim(), fields[4].trim());
@@ -105,7 +111,10 @@ class TaskStorage {
                 .append(task.isDone ? "1" : "0").append(" | ")
                 .append(escape(task.description));
         if (task.type == TaskType.DEADLINE) {
-            record.append(" | ").append(escape(task.by));
+            String deadline = task.byDateTime == null
+                    ? task.by
+                    : task.byDateTime.format(DateTimeFormatter.ofPattern("uuuu-MM-dd HHmm"));
+            record.append(" | ").append(escape(deadline));
         } else if (task.type == TaskType.EVENT) {
             record.append(" | ").append(escape(task.from))
                     .append(" | ").append(escape(task.to));
