@@ -47,3 +47,32 @@ Ensure that Java 25 is used when running the application or build tasks. On macO
 Use lightweight tags unless the user requests an annotated tag.
 When proposing or creating a commit message, include enough detail to explain the rationale for the change.
 Do not commit or push unless explicitly asked.
+
+### Commit subjects
+
+Every commit must have a clear subject line:
+
+* Prefer 50 characters or fewer; never exceed 72 characters.
+* Use the imperative mood, such as `Add README.md`, not `Added README.md`.
+* Capitalize the first word.
+* Do not end the subject with a period.
+* A relevant scope or category prefix is allowed, such as `chore:` or `Task:`.
+
+### Commit bodies
+
+Non-trivial commits should include a body separated from the subject by a blank line.
+Wrap body lines at 72 characters and use blank lines between paragraphs when useful.
+Explain what changed and why, rather than describing implementation mechanics already
+visible in the diff. A useful structure is:
+
+1. Describe the current situation in the present tense.
+2. Explain why it needs to change.
+3. State what is being done and why that approach was chosen.
+4. Include other relevant context, such as compatibility or testing notes.
+
+Use bullet points when they make the explanation clearer.
+
+### Branch names
+
+Use meaningful kebab-case branch names, such as `refactor-ui-tests`. If a branch is
+related to an issue, use `issueNumber-keywords`, such as `1234-ui-freeze-error`.
