@@ -8,7 +8,7 @@ class Furina {
     static void main(String[] args) {
         String separator = "____________________________________________________________";
         String banner = "    F U R I N A";
-        ArrayList<Task> tasks = new ArrayList<>();
+        ArrayList<Task> tasks = TaskStorage.load();
 
         System.out.println(separator);
         System.out.println(banner);
@@ -45,6 +45,7 @@ class Furina {
                 try {
                     Task newTask = createTask(command);
                     tasks.add(newTask);
+                    saveTasks(tasks);
                     System.out.println("    Got it. I've added this task:");
                     System.out.println("      " + newTask);
                     System.out.println("    Now you have " + tasks.size() + " tasks in the list.");
@@ -59,6 +60,13 @@ class Furina {
         System.out.println(separator);
         System.out.println("    Bye. Hope to see you again soon!");
         System.out.println(separator);
+    }
+
+    /** Saves after a mutation and reports storage failures without stopping the chatbot. */
+    private static void saveTasks(ArrayList<Task> tasks) {
+        if (!TaskStorage.save(tasks)) {
+            System.out.println("    OOPS!!! I couldn't save the task list.");
+        }
     }
 
     /**
@@ -84,10 +92,12 @@ class Furina {
 
             if (isDone) {
                 tasks.get(taskIndex).markAsDone();
+                saveTasks(tasks);
                 System.out.println("    Nice! I've marked this task as done:");
                 System.out.println("      " + tasks.get(taskIndex));
             } else {
                 tasks.get(taskIndex).markAsNotDone();
+                saveTasks(tasks);
                 System.out.println("    OK, I've marked this task as not done yet:");
                 System.out.println("      " + tasks.get(taskIndex));
             }
@@ -116,6 +126,7 @@ class Furina {
             }
 
             Task deletedTask = tasks.remove(taskIndex);
+            saveTasks(tasks);
             System.out.println("    Noted. I've removed this task:");
             System.out.println("      " + deletedTask);
             System.out.println("    Now you have " + tasks.size() + " tasks in the list.");

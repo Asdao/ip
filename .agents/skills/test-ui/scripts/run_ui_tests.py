@@ -116,9 +116,11 @@ def main() -> int:
             return 1
 
         for case_number, case in enumerate(cases, start=1):
+            case_directory = Path(temporary) / f"case-{case_number}"
+            case_directory.mkdir()
             result = subprocess.run(
                 [java, "-cp", classes, "Furina"],
-                cwd=ROOT,
+                cwd=case_directory,
                 input=case["input"],
                 capture_output=True,
                 text=True,
