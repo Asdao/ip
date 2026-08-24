@@ -3,12 +3,14 @@ package duke;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Scanner;
 
 /**
  * Entry point for the Furina chatbot.
  */
 class Furina {
+    /** Starts Furina, reads commands, and coordinates task operations. */
     static void main(String[] args) {
         String separator = "____________________________________________________________";
         String banner = "    F U R I N A";
@@ -39,6 +41,8 @@ class Furina {
                 for (int i = 0; i < tasks.size(); i++) {
                     System.out.println("    " + (i + 1) + "." + tasks.get(i));
                 }
+            } else if (isCommand(command, "find")) {
+                findTasks(command, tasks);
             } else if (isCommand(command, "delete")) {
                 deleteTask(command, tasks);
             } else if (isCommand(command, "mark")) {
@@ -64,6 +68,30 @@ class Furina {
         System.out.println(separator);
         System.out.println("    Bye. Hope to see you again soon!");
         System.out.println(separator);
+    }
+
+    /** Displays tasks whose descriptions contain the requested keyword. */
+    private static void findTasks(String command, ArrayList<Task> tasks) {
+        String keyword = command.length() == 4 ? "" : command.substring(5).trim();
+        if (keyword.isBlank()) {
+            System.out.println("    OOPS!!! Please provide a keyword to search for.");
+            return;
+        }
+
+        String normalizedKeyword = keyword.toLowerCase(Locale.ROOT);
+        System.out.println("    Here are the matching tasks in your list:");
+        boolean hasMatch = false;
+        for (int i = 0; i < tasks.size(); i++) {
+            Task task = tasks.get(i);
+            if (task.description.toLowerCase(Locale.ROOT).contains(normalizedKeyword)) {
+                System.out.println("    " + (i + 1) + "." + task);
+                hasMatch = true;
+            }
+        }
+
+        if (!hasMatch) {
+            System.out.println("    No matching tasks found.");
+        }
     }
 
     /** Saves after a mutation and reports storage failures without stopping the chatbot. */

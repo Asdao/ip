@@ -313,3 +313,59 @@ ____________________________________________________________
     Bye. Hope to see you again soon!
 ____________________________________________________________
 ```
+
+## Test case 8: Find tasks by keyword
+
+Aim: Verify that `find` performs a case-insensitive search in task descriptions and preserves task list numbers.
+
+Input:
+
+```text
+todo read book
+deadline return book /by Sunday
+event project meeting /from Mon 2pm /to 4pm
+find BOOK
+find dentist
+find
+bye
+```
+
+Expected output:
+
+```text
+____________________________________________________________
+    F U R I N A
+Hello! I'm Furina.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+    Got it. I've added this task:
+      [T][ ] read book
+    Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+    Got it. I've added this task:
+      [D][ ] return book (by: Sunday)
+    Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+    Got it. I've added this task:
+      [E][ ] project meeting (from: Mon 2pm to: 4pm)
+    Now you have 3 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+    Here are the matching tasks in your list:
+    1.[T][ ] read book
+    2.[D][ ] return book (by: Sunday)
+____________________________________________________________
+____________________________________________________________
+    Here are the matching tasks in your list:
+    No matching tasks found.
+____________________________________________________________
+____________________________________________________________
+    OOPS!!! Please provide a keyword to search for.
+____________________________________________________________
+____________________________________________________________
+    Bye. Hope to see you again soon!
+____________________________________________________________
+```
