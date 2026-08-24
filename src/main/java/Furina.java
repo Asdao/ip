@@ -1,24 +1,17 @@
 import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  * Entry point for the Furina chatbot.
  */
 class Furina {
     static void main(String[] args) {
-        String separator = "____________________________________________________________";
-        String banner = "    F U R I N A";
         ArrayList<Task> tasks = TaskStorage.load();
+        Ui ui = new Ui();
 
-        System.out.println(separator);
-        System.out.println(banner);
-        System.out.println("Hello! I'm Furina.");
-        System.out.println("What can I do for you?");
-        System.out.println(separator);
+        ui.showWelcome();
 
-        Scanner scanner = new Scanner(System.in);
-        while (scanner.hasNextLine()) {
-            String command = scanner.nextLine();
+        String command;
+        while ((command = ui.readCommand()) != null) {
 
             if (command.isBlank()) {
                 continue;
@@ -28,44 +21,37 @@ class Furina {
                 break;
             }
 
-            System.out.println(separator);
+            ui.showLine();
 
             if (command.equals("list")) {
-                System.out.println("    Here are the tasks in your list:");
-                for (int i = 0; i < tasks.size(); i++) {
-                    System.out.println("    " + (i + 1) + "." + tasks.get(i));
-                }
+                ui.showTaskList(tasks);
             } else if (isCommand(command, "delete")) {
-                deleteTask(command, tasks);
+                deleteTask(command, tasks, ui);
             } else if (isCommand(command, "mark")) {
-                updateTaskStatus(command, tasks, true);
+                updateTaskStatus(command, tasks, true, ui);
             } else if (isCommand(command, "unmark")) {
-                updateTaskStatus(command, tasks, false);
+                updateTaskStatus(command, tasks, false, ui);
             } else {
                 try {
                     Task newTask = createTask(command);
                     tasks.add(newTask);
-                    saveTasks(tasks);
-                    System.out.println("    Got it. I've added this task:");
-                    System.out.println("      " + newTask);
-                    System.out.println("    Now you have " + tasks.size() + " tasks in the list.");
+                    saveTasks(tasks, ui);
+                    ui.showAddedTask(newTask, tasks.size());
                 } catch (IllegalArgumentException exception) {
-                    System.out.println("    OOPS!!! " + exception.getMessage());
+                    ui.showError(exception.getMessage());
                 }
             }
 
-            System.out.println(separator);
+            ui.showLine();
         }
 
-        System.out.println(separator);
-        System.out.println("    Bye. Hope to see you again soon!");
-        System.out.println(separator);
+        ui.showGoodbye();
     }
 
     /** Saves after a mutation and reports storage failures without stopping the chatbot. */
-    private static void saveTasks(ArrayList<Task> tasks) {
+    private static void saveTasks(ArrayList<Task> tasks, Ui ui) {
         if (!TaskStorage.save(tasks)) {
-            System.out.println("    OOPS!!! I couldn't save the task list.");
+            ui.showError("I couldn't save the task list.");
         }
     }
 
@@ -74,10 +60,10 @@ class Furina {
      * "mark 2" or "unmark 2".
      */
     private static void updateTaskStatus(String command, ArrayList<Task> tasks,
-                                         boolean isDone) {
+                                         boolean isDone, Ui ui) {
         String[] commandParts = command.trim().split("\\s+");
         if (commandParts.length != 2) {
-            System.out.println("    OOPS!!! Please provide a task number, for example: mark 2.");
+            ui.showError("Please provide a task number, for example: mark 2.");
             return;
         }
 
@@ -86,33 +72,31 @@ class Furina {
             int taskIndex = taskNumber - 1;
 
             if (taskIndex < 0 || taskIndex >= tasks.size()) {
-                System.out.println("    OOPS!!! There is no task with that number.");
+                ui.showError("There is no task with that number.");
                 return;
             }
 
             if (isDone) {
                 tasks.get(taskIndex).markAsDone();
-                saveTasks(tasks);
-                System.out.println("    Nice! I've marked this task as done:");
-                System.out.println("      " + tasks.get(taskIndex));
+                saveTasks(tasks, ui);
+                ui.showUpdatedTask(tasks.get(taskIndex), true);
             } else {
                 tasks.get(taskIndex).markAsNotDone();
-                saveTasks(tasks);
-                System.out.println("    OK, I've marked this task as not done yet:");
-                System.out.println("      " + tasks.get(taskIndex));
+                saveTasks(tasks, ui);
+                ui.showUpdatedTask(tasks.get(taskIndex), false);
             }
         } catch (NumberFormatException exception) {
-            System.out.println("    OOPS!!! Task numbers must be positive whole numbers.");
+            ui.showError("Task numbers must be positive whole numbers.");
         }
     }
 
     /**
      * Removes a task using a command such as "delete 3".
      */
-    private static void deleteTask(String command, ArrayList<Task> tasks) {
+    private static void deleteTask(String command, ArrayList<Task> tasks, Ui ui) {
         String[] commandParts = command.trim().split("\\s+");
         if (commandParts.length != 2) {
-            System.out.println("    OOPS!!! Please provide a task number, for example: delete 2.");
+            ui.showError("Please provide a task number, for example: delete 2.");
             return;
         }
 
@@ -121,17 +105,15 @@ class Furina {
             int taskIndex = taskNumber - 1;
 
             if (taskIndex < 0 || taskIndex >= tasks.size()) {
-                System.out.println("    OOPS!!! There is no task with that number.");
+                ui.showError("There is no task with that number.");
                 return;
             }
 
             Task deletedTask = tasks.remove(taskIndex);
-            saveTasks(tasks);
-            System.out.println("    Noted. I've removed this task:");
-            System.out.println("      " + deletedTask);
-            System.out.println("    Now you have " + tasks.size() + " tasks in the list.");
+            saveTasks(tasks, ui);
+            ui.showDeletedTask(deletedTask, tasks.size());
         } catch (NumberFormatException exception) {
-            System.out.println("    OOPS!!! Task numbers must be positive whole numbers.");
+            ui.showError("Task numbers must be positive whole numbers.");
         }
     }
 
