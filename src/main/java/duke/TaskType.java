@@ -1,3 +1,5 @@
+package duke;
+
 /**
  * The supported kinds of tasks in Furina.
  */

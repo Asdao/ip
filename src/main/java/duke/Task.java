@@ -1,3 +1,5 @@
+package duke;
+
 /**
  * Represents one task in Furina's in-memory task list.
  */

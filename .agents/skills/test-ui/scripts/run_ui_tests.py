@@ -95,7 +95,7 @@ def main() -> int:
         print(f"SETUP FAILURE: {error}", file=sys.stderr)
         return 1
 
-    source_files = sorted((ROOT / "src" / "main" / "java").glob("*.java"))
+    source_files = sorted((ROOT / "src" / "main" / "java").rglob("*.java"))
     if not source_files:
         print("SETUP FAILURE: no Java source files found", file=sys.stderr)
         return 1
@@ -119,7 +119,7 @@ def main() -> int:
             case_directory = Path(temporary) / f"case-{case_number}"
             case_directory.mkdir()
             result = subprocess.run(
-                [java, "-cp", classes, "Furina"],
+                [java, "-cp", classes, "duke.Furina"],
                 cwd=case_directory,
                 input=case["input"],
                 capture_output=True,
