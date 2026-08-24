@@ -23,7 +23,13 @@ class DateTimeParser {
             .optionalStart().appendPattern(" HH:mm").optionalEnd()
             .toFormatter().withResolverStyle(ResolverStyle.STRICT);
 
-    /** Parses ISO or day/month dates, with an optional time. */
+    /**
+     * Parses an ISO or day/month date, optionally followed by a time.
+     *
+     * @param text date text such as {@code 2019-10-15} or {@code 2/12/2019 1800}
+     * @return the parsed date and time, using midnight when no time is supplied
+     * @throws DateTimeParseException if the text is not a supported valid date
+     */
     static LocalDateTime parse(String text) {
         String trimmed = text.trim();
         return parseDateTimeOrDate(trimmed, ISO_DATE, DAY_MONTH_DATE);
@@ -47,7 +53,12 @@ class DateTimeParser {
         }
     }
 
-    /** Formats a parsed deadline for display. */
+    /**
+     * Formats a parsed deadline for display using an English month and AM/PM time.
+     *
+     * @param dateTime the date and time to format
+     * @return a readable date, including a time when it is not midnight
+     */
     static String format(LocalDateTime dateTime) {
         String date = dateTime.format(DateTimeFormatter.ofPattern("MMM d uuuu", Locale.ENGLISH));
         if (dateTime.toLocalTime().equals(LocalTime.MIDNIGHT)) {
