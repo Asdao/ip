@@ -272,3 +272,44 @@ ____________________________________________________________
     Bye. Hope to see you again soon!
 ____________________________________________________________
 ```
+
+## Test case 7: Date-aware deadlines
+
+Aim: Verify ISO and day/month deadlines are parsed and displayed as readable dates and times.
+
+Input:
+
+```text
+deadline submit report /by 2019-10-15
+deadline return book /by 2/12/2019 1800
+list
+bye
+```
+
+Expected output:
+
+```text
+____________________________________________________________
+    F U R I N A
+Hello! I'm Furina.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+    Got it. I've added this task:
+      [D][ ] submit report (by: Oct 15 2019)
+    Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+    Got it. I've added this task:
+      [D][ ] return book (by: Dec 2 2019 6:00 PM)
+    Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+    Here are the tasks in your list:
+    1.[D][ ] submit report (by: Oct 15 2019)
+    2.[D][ ] return book (by: Dec 2 2019 6:00 PM)
+____________________________________________________________
+____________________________________________________________
+    Bye. Hope to see you again soon!
+____________________________________________________________
+```
