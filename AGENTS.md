@@ -22,6 +22,13 @@ Unless the user says otherwise, assume that you are assisting a student working 
   * Make generated code as self-explanatory as possible, and include explanatory comments where they improve understanding.
   * When faced with a design choice, choose the simplest option that is sufficient for the requirements, while briefly explaining relevant more advanced alternatives.
 
+# Project skills
+
+For every Java implementation, refactoring, test, or review, follow
+`.agents/skills/seedu-java-coding-standard/SKILL.md` and keep the Gradle Checkstyle
+checks passing. For every commit or branch operation, follow
+`.agents/skills/seedu-git-standard/SKILL.md`.
+
 # Project-specific requirements
 
 ## UI testing
