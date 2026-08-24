@@ -9,6 +9,7 @@ import java.util.Scanner;
  * Entry point for the Furina chatbot.
  */
 class Furina {
+    /** Starts Furina, reads commands, and coordinates task operations. */
     static void main(String[] args) {
         String separator = "____________________________________________________________";
         String banner = "    F U R I N A";
