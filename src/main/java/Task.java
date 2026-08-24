@@ -1,3 +1,5 @@
+import java.time.LocalDateTime;
+
 /**
  * Represents one task in Furina's in-memory task list.
  */
@@ -6,6 +8,7 @@ public class Task {
     protected String description;
     protected boolean isDone;
     protected String by;
+    protected LocalDateTime byDateTime;
     protected String from;
     protected String to;
 
@@ -32,8 +35,20 @@ public class Task {
         this.description = description;
         this.isDone = false;
         this.by = by;
+        this.byDateTime = null;
         this.from = from;
         this.to = to;
+    }
+
+    /**
+     * Creates a deadline task whose deadline is represented as a date and time.
+     *
+     * @param description the text describing the task
+     * @param byDateTime the parsed deadline
+     */
+    public Task(String description, LocalDateTime byDateTime) {
+        this(TaskType.DEADLINE, description, null, null, null);
+        this.byDateTime = byDateTime;
     }
 
     /**
@@ -64,7 +79,8 @@ public class Task {
     public String toString() {
         String details = "";
         if (type == TaskType.DEADLINE) {
-            details = " (by: " + by + ")";
+            String deadline = byDateTime == null ? by : DateTimeParser.format(byDateTime);
+            details = " (by: " + deadline + ")";
         } else if (type == TaskType.EVENT) {
             details = " (from: " + from + " to: " + to + ")";
         }
