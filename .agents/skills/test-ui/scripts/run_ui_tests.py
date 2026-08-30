@@ -81,6 +81,29 @@ def display_block(label: str, value: str) -> None:
     print(value, end="" if value.endswith("\n") else "\n")
 
 
+def find_gradle_wrapper() -> Path:
+    """Return the platform-specific Gradle wrapper script."""
+    wrapper_name = "gradlew.bat" if os.name == "nt" else "./gradlew"
+    wrapper = ROOT / wrapper_name
+    if not wrapper.is_file():
+        raise RuntimeError(f"Gradle wrapper was not found at {wrapper}")
+    return wrapper
+
+
+def get_compile_classpath() -> str:
+    """Ask Gradle for the classpath needed to compile the application."""
+    result = subprocess.run(
+        [find_gradle_wrapper(), "-q", "printUiTestClasspath"],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if result.returncode != 0:
+        raise RuntimeError(result.stdout + result.stderr)
+    return result.stdout.strip()
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -91,6 +114,7 @@ def main() -> int:
     try:
         java, javac = find_java25()
         cases = read_cases(args.plan)
+        compile_classpath = get_compile_classpath()
     except (OSError, RuntimeError, ValueError) as error:
         print(f"SETUP FAILURE: {error}", file=sys.stderr)
         return 1
@@ -104,7 +128,7 @@ def main() -> int:
         classes = Path(temporary) / "classes"
         classes.mkdir()
         compile_result = subprocess.run(
-            [javac, "-d", classes, *source_files],
+            [javac, "-cp", compile_classpath, "-d", classes, *source_files],
             cwd=ROOT,
             capture_output=True,
             text=True,
@@ -118,8 +142,9 @@ def main() -> int:
         for case_number, case in enumerate(cases, start=1):
             case_directory = Path(temporary) / f"case-{case_number}"
             case_directory.mkdir()
+            runtime_classpath = os.pathsep.join((str(classes), compile_classpath))
             result = subprocess.run(
-                [java, "-cp", classes, "duke.Furina"],
+                [java, "-cp", runtime_classpath, "duke.Furina"],
                 cwd=case_directory,
                 input=case["input"],
                 capture_output=True,
