@@ -13,5 +13,8 @@
         <module name="AvoidStarImport"/>
         <module name="EmptyLineSeparator"/>
         <module name="NeedBraces"/>
+        <module name="UnusedImports"/>
+        <module name="RedundantImport"/>
+        <module name="ModifierOrder"/>
     </module>
 </module>
