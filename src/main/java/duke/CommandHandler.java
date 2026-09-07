@@ -29,6 +29,9 @@ public class CommandHandler {
         if (command.equals("list")) {
             return listTasks();
         }
+        if (command.equals("sort")) {
+            return sortTasks();
+        }
         if (isCommand(command, "find")) {
             return findTasks(command);
         }
@@ -59,6 +62,12 @@ public class CommandHandler {
             response.append("\n").append(i + 1).append(".").append(tasks.get(i));
         }
         return response.toString();
+    }
+
+    private String sortTasks() {
+        tasks.sort(Task.byDeadline());
+        saveTasks();
+        return "Sorted tasks by deadline:\n" + listTasks();
     }
 
     private String findTasks(String command) {

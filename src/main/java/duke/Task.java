@@ -1,6 +1,7 @@
 package duke;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 
 /**
  * Represents one task in Furina's in-memory task list.
@@ -76,6 +77,17 @@ public class Task {
     /** Marks this task as not done. */
     public void markAsNotDone() {
         isDone = false;
+    }
+
+    /**
+     * Returns a comparator that orders tasks by parsed deadline, leaving
+     * tasks without a parsed deadline after dated deadlines.
+     *
+     * @return a comparator for chronological deadline ordering
+     */
+    static Comparator<Task> byDeadline() {
+        return Comparator.comparing(task -> task.byDateTime,
+                Comparator.nullsLast(Comparator.naturalOrder()));
     }
 
     /**
