@@ -85,13 +85,11 @@ public class Task {
      */
     @Override
     public String toString() {
-        String details = "";
-        if (type == TaskType.DEADLINE) {
-            String deadline = byDateTime == null ? by : DateTimeParser.format(byDateTime);
-            details = " (by: " + deadline + ")";
-        } else if (type == TaskType.EVENT) {
-            details = " (from: " + from + " to: " + to + ")";
-        }
+        String details = switch (type) {
+        case TODO -> "";
+        case DEADLINE -> " (by: " + (byDateTime == null ? by : DateTimeParser.format(byDateTime)) + ")";
+        case EVENT -> " (from: " + from + " to: " + to + ")";
+        };
         return "[" + type.getSymbol() + "][" + getStatusIcon() + "] "
                 + description + details;
     }
