@@ -15,11 +15,20 @@ Commit subjects must:
 - Use imperative mood, capitalize the first word, and omit a final period.
 - Optionally use a meaningful scope or category prefix.
 
-Non-trivial commits should have a body separated by a blank line. Wrap it at 72
-characters, use paragraphs or bullets as useful, and explain what changed and why,
-not implementation mechanics already visible in the diff. A useful order is the
-current situation, why it needs to change, what to do, why that approach was chosen,
-and relevant context.
+Every commit should have a full message: a body separated from the subject by a
+blank line. Wrap the body at 72 characters, use paragraphs or bullets as useful,
+and explain what changed and why, not implementation mechanics already visible
+in the diff. A useful order is the current situation, why it needs to change,
+what to do, why that approach was chosen, and relevant context.
+
+Example:
+
+```text
+Add JavaFX launcher
+
+Start the application through a separate launcher class so JavaFX can initialise
+reliably across supported environments.
+```
 
 Use meaningful kebab-case branch names. For issue branches, use
 `issueNumber-relevant-kebab-case-description`.

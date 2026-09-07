@@ -67,10 +67,11 @@ Every commit must have a clear subject line:
 
 ### Commit bodies
 
-Non-trivial commits should include a body separated from the subject by a blank line.
-Wrap body lines at 72 characters and use blank lines between paragraphs when useful.
-Explain what changed and why, rather than describing implementation mechanics already
-visible in the diff. A useful structure is:
+Every commit should use a full commit message: a clear subject followed by a body
+separated by a blank line. Wrap body lines at 72 characters and use blank lines
+between paragraphs when useful. Explain what changed and why, rather than
+describing implementation mechanics already visible in the diff. A useful
+structure is:
 
 1. Describe the current situation in the present tense.
 2. Explain why it needs to change.
@@ -78,6 +79,15 @@ visible in the diff. A useful structure is:
 4. Include other relevant context, such as compatibility or testing notes.
 
 Use bullet points when they make the explanation clearer.
+
+For example:
+
+```text
+Add JavaFX launcher
+
+Start the application through a separate launcher class so JavaFX can initialise
+reliably across supported environments.
+```
 
 ### Branch names
 
