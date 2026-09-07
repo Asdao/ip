@@ -44,6 +44,7 @@ class TaskStorage {
 
     /** Saves the complete current task list, creating the data directory if needed. */
     static boolean save(List<Task> tasks) {
+        assert tasks != null : "Task collection must not be null";
         try {
             Files.createDirectories(FILE_PATH.getParent());
             List<String> lines = tasks.stream()
@@ -105,6 +106,7 @@ class TaskStorage {
     }
 
     private static String format(Task task) {
+        assert task != null : "Task to save must not be null";
         StringBuilder record = new StringBuilder();
         record.append(task.type.getSymbol()).append(" | ")
                 .append(task.isDone ? "1" : "0").append(" | ")
