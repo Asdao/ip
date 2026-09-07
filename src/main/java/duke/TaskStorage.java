@@ -46,10 +46,9 @@ class TaskStorage {
     static boolean save(List<Task> tasks) {
         try {
             Files.createDirectories(FILE_PATH.getParent());
-            ArrayList<String> lines = new ArrayList<>();
-            for (Task task : tasks) {
-                lines.add(format(task));
-            }
+            List<String> lines = tasks.stream()
+                    .map(TaskStorage::format)
+                    .toList();
             Files.write(FILE_PATH, lines, StandardCharsets.UTF_8);
             return true;
         } catch (IOException exception) {
