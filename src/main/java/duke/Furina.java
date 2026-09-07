@@ -41,6 +41,8 @@ class Furina {
                 for (int i = 0; i < tasks.size(); i++) {
                     System.out.println("    " + (i + 1) + "." + tasks.get(i));
                 }
+            } else if (command.equals("sort")) {
+                sortTasks(tasks);
             } else if (isCommand(command, "find")) {
                 findTasks(command, tasks);
             } else if (isCommand(command, "delete")) {
@@ -68,6 +70,17 @@ class Furina {
         System.out.println(separator);
         System.out.println("    Bye. Hope to see you again soon!");
         System.out.println(separator);
+    }
+
+    /** Sorts dated deadlines chronologically and displays the reordered list. */
+    private static void sortTasks(ArrayList<Task> tasks) {
+        tasks.sort(Task.byDeadline());
+        saveTasks(tasks);
+        System.out.println("    Sorted tasks by deadline:");
+        System.out.println("    Here are the tasks in your list:");
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println("    " + (i + 1) + "." + tasks.get(i));
+        }
     }
 
     /** Displays tasks whose descriptions contain the requested keyword. */

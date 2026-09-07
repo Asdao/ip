@@ -3,6 +3,7 @@ package duke;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
@@ -41,5 +42,19 @@ class TaskTest {
                 "Mon 2pm", "4pm");
 
         assertEquals("[E][ ] project meeting (from: Mon 2pm to: 4pm)", task.toString());
+    }
+
+    @Test
+    void byDeadline_sortsParsedDeadlinesChronologically() {
+        Task later = new Task("later", LocalDateTime.of(2026, 9, 20, 9, 0));
+        Task earlier = new Task("earlier", LocalDateTime.of(2026, 9, 10, 9, 0));
+        Task todo = new Task("no deadline");
+        ArrayList<Task> tasks = new ArrayList<>(java.util.List.of(later, todo, earlier));
+
+        tasks.sort(Task.byDeadline());
+
+        assertEquals("earlier", tasks.get(0).description);
+        assertEquals("later", tasks.get(1).description);
+        assertEquals("no deadline", tasks.get(2).description);
     }
 }

@@ -369,3 +369,52 @@ ____________________________________________________________
     Bye. Hope to see you again soon!
 ____________________________________________________________
 ```
+
+## Test case 9: Sort tasks by deadline
+
+Aim: Verify that `sort` orders dated deadlines chronologically and keeps tasks without dates after them.
+
+Input:
+
+```text
+deadline later task /by 2026-09-20
+todo no deadline
+deadline earlier task /by 2026-09-10
+sort
+bye
+```
+
+Expected output:
+
+```text
+____________________________________________________________
+    F U R I N A
+Hello! I'm Furina.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+    Got it. I've added this task:
+      [D][ ] later task (by: Sep 20 2026)
+    Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+    Got it. I've added this task:
+      [T][ ] no deadline
+    Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+    Got it. I've added this task:
+      [D][ ] earlier task (by: Sep 10 2026)
+    Now you have 3 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+    Sorted tasks by deadline:
+    Here are the tasks in your list:
+    1.[D][ ] earlier task (by: Sep 10 2026)
+    2.[D][ ] later task (by: Sep 20 2026)
+    3.[T][ ] no deadline
+____________________________________________________________
+____________________________________________________________
+    Bye. Hope to see you again soon!
+____________________________________________________________
+```
