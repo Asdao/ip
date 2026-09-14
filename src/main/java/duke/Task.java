@@ -2,6 +2,7 @@ package duke;
 
 import java.time.LocalDateTime;
 import java.util.Comparator;
+import java.util.Objects;
 
 /**
  * Represents one task in Furina's in-memory task list.
@@ -77,6 +78,22 @@ public class Task {
     /** Marks this task as not done. */
     public void markAsNotDone() {
         isDone = false;
+    }
+
+    /**
+     * Checks whether two tasks have the same type and user-visible details.
+     *
+     * @param other the task to compare with this task
+     * @return true when both tasks represent the same task details
+     */
+    boolean hasSameDetails(Task other) {
+        return other != null
+                && type == other.type
+                && Objects.equals(description, other.description)
+                && Objects.equals(by, other.by)
+                && Objects.equals(byDateTime, other.byDateTime)
+                && Objects.equals(from, other.from)
+                && Objects.equals(to, other.to);
     }
 
     /**

@@ -76,4 +76,12 @@ class Ui {
     void showError(String message) {
         System.out.println("    OOPS!!! " + message);
     }
+
+    /** Displays a response returned by the shared command handler. */
+    void showResponse(String response) {
+        for (String line : response.split("\\R")) {
+            String indentation = line.startsWith("[") ? "      " : "    ";
+            System.out.println(indentation + line);
+        }
+    }
 }

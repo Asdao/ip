@@ -418,3 +418,46 @@ ____________________________________________________________
     Bye. Hope to see you again soon!
 ____________________________________________________________
 ```
+
+## Test case 10: Invalid date and duplicate task handling
+
+Aim: Verify that invalid date-like input and duplicate tasks are rejected without
+crashing or adding a second copy.
+
+Input:
+
+```text
+deadline submit report /by 2019-02-30
+todo read book
+todo read book
+list
+bye
+```
+
+Expected output:
+
+```text
+____________________________________________________________
+    F U R I N A
+Hello! I'm Furina.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+    OOPS!!! Please provide a valid deadline date.
+____________________________________________________________
+____________________________________________________________
+    Got it. I've added this task:
+      [T][ ] read book
+    Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+    OOPS!!! That task is already in your list.
+____________________________________________________________
+____________________________________________________________
+    Here are the tasks in your list:
+    1.[T][ ] read book
+____________________________________________________________
+____________________________________________________________
+    Bye. Hope to see you again soon!
+____________________________________________________________
+```
